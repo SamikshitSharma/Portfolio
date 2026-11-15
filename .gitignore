@@ -1,0 +1,13 @@
+node_modules/
+.npm-cache/
+.astro/
+dist/
+.vercel/
+.vercelignore.local
+output/
+playwright-report/
+test-results/
+private-evidence/
+/docs/PROJECT_STATUS.md
+.env
+.env.*

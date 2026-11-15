@@ -1,0 +1,79 @@
+---
+import Frame from "../../components/Frame.astro";
+import Process from "../../components/Process.astro";
+import { achievements } from "../../data/portfolio";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(index + 1) % projects.length] },
+  }));
+}
+const { project, next } = Astro.props;
+const achievement = achievements.find(result => result.project === project.slug);
+---
+<Frame title={project.name + " — Samikshit Sharma"} description={project.summary}>
+  <main id="main" class="case-page" tabindex="-1">
+    <div class="wrap">
+      <a class="text-action back-link" href="/#projects"><span aria-hidden="true">←</span> Selected work</a>
+      <header class="case-header">
+        <p class="eyebrow">{project.category} · {project.status}</p>
+        <h1>{project.name}</h1>
+        <p class="case-statement">{project.summary}</p>
+        <div class="case-actions">
+          <a class="button" href={project.repo}>View repository <span aria-hidden="true">↗</span></a>
+          {project.demo && <a class="text-action" href={project.demo}>Open demo <span aria-hidden="true">↗</span></a>}
+        </div>
+      </header>
+
+      <section class="case-context" aria-labelledby="problem">
+        <h2 id="problem">Problem and objective</h2>
+        <p>{project.problem}</p>
+      </section>
+
+      <section class="case-flow" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">Architecture</h2>
+        <p>{project.architecture}</p>
+        <Process steps={project.steps} />
+        <ul class="tags" aria-label="Technology stack" role="list">
+          {project.stack.map(tool => <li>{tool}</li>)}
+        </ul>
+      </section>
+
+      <div class="case-reading">
+        <section>
+          <h2>Engineering decisions</h2>
+          <ul>{project.decisions.map(decision => <li>{decision}</li>)}</ul>
+        </section>
+        <section>
+          <h2>My contribution</h2>
+          <p>{project.contribution}</p>
+          <p><a class="text-action" href={project.repo + "/commits/" + project.commit}>Review commit history <span aria-hidden="true">↗</span></a></p>
+        </section>
+        <section>
+          <h2>Testing and verification</h2>
+          <p>{project.testing}</p>
+        </section>
+        <section>
+          <h2>Outcome</h2>
+          <p>{project.outcome}</p>
+          {achievement && <p><a class="text-action" href={"/#result-" + achievement.project}>View PromptWars evaluation <span aria-hidden="true">↗</span></a></p>}
+        </section>
+        <section>
+          <h2>Scope and limitations</h2>
+          <p>{project.boundaries}</p>
+        </section>
+      </div>
+
+      <section class="case-evidence">
+        <h2>Source evidence</h2>
+        <p>Reviewed revision <a href={project.repo + "/tree/" + project.commit}><code>{project.commit.slice(0, 12)}</code></a></p>
+        <ul>
+          {project.evidence.map(([label, path]) => <li><a href={project.repo + "/blob/" + project.commit + "/" + path}>{label} <span aria-hidden="true">↗</span></a></li>)}
+        </ul>
+      </section>
+      <a class="next-case" href={"/work/" + next.slug + "/"}><span><small>Next case study</small>{next.name}</span><span aria-hidden="true">↗</span></a>
+    </div>
+  </main>
+</Frame>

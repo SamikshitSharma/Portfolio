@@ -1,0 +1,7 @@
+---
+interface Props { steps: readonly string[]; }
+const { steps } = Astro.props;
+---
+<ol class="process" aria-label="System workflow">
+  {steps.map((step, i) => <li><span class="process-node" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span><span>{step}</span></li>)}
+</ol>

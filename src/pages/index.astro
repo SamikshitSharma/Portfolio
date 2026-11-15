@@ -1,0 +1,195 @@
+---
+import Frame from "../components/Frame.astro";
+import WorkLink from "../components/WorkLink.astro";
+import { achievements, credentials, evaluationCriteria, profiles, skills } from "../data/portfolio";
+import { projects } from "../data/projects";
+
+const [linkedin, github] = profiles;
+const featuredResults = achievements.map(result => ({
+  ...result,
+  name: projects.find(project => project.slug === result.project)!.name,
+}));
+const milestones = [
+  { date: "September–November 2026", name: "Verified outputs and reviewable changes", context: "Project work · Legal Consistency and UtsavPilot", details: [
+    "Compared agreements with clause-level evidence and server-side citation validation in Legal Consistency.",
+    "Built a deterministic event-plan impact preview so organizers can review budget, capacity and schedule changes before applying them.",
+  ] },
+  { date: "June–July 2026", name: "Cloud workflows and operational decisions", context: "Project work · CloudOps, Governed RAG and Stadium Ops", details: [
+    "Modelled approval, execution and verification as separate states in an Azure operations prototype.",
+    "Added refusal and evidence checks to document retrieval, and reconciled venue recommendations with deterministic zone rules.",
+  ] },
+  { date: "November 2022–present", name: "Integrated M.Tech in Computer Science and Engineering", context: "Academic milestone · NIET", details: [
+    "Study computer science and apply it in projects spanning backend APIs, cloud infrastructure and applied AI.",
+  ] },
+];
+---
+<Frame title="Samikshit Sharma — Software, Cloud & Applied AI" description="Engineering portfolio and project case studies in software, backend systems, cloud automation and applied AI." home>
+  <div class="environment" aria-hidden="true" data-environment data-renderer="fallback">
+    <div class="night-still"></div>
+    <canvas data-world></canvas>
+    <div class="daybreak">
+      {Array.from({ length: 7 }, (_, i) => <i style={"--i:" + i}></i>)}
+    </div>
+    <div class="scene-shade"></div>
+  </div>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="intro" aria-labelledby="intro-title" data-chapter data-view>
+      <div class="hero-inner wrap">
+        <div class="hero-copy">
+          <p class="eyebrow hero-location">India · Open to engineering opportunities</p>
+          <h1 id="intro-title">Samikshit <span>Sharma</span></h1>
+          <p class="role"><span class="sr-only">Software Engineering, Backend Systems, Cloud and DevOps, Applied AI</span><span aria-hidden="true"><strong data-role>Software Engineering</strong><i></i></span></p>
+          <p class="hero-summary">I’m an Integrated M.Tech CSE student at NIET. I build tools for cloud operations, backend systems and applied AI, with a focus on decisions an operator can trace and review.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projects">View Projects</a>
+            <a class="button secondary" href={linkedin.url}>LinkedIn Profile <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-social">
+            {([github, linkedin]).map(profile => <a href={profile.url}>{profile.name} <span aria-hidden="true">↗</span></a>)}
+          </div>
+        </div>
+        <div class="editor panel" role="group" aria-label="Engineer profile">
+          <div class="editor-bar"><span class="editor-tab"><b aria-hidden="true">&#123;&#125;</b> profile.ts</span><span class="editor-kind">TypeScript</span></div>
+          <pre><code><span class="syntax-keyword">const</span> profile = &#123;
+  language: <span class="syntax-string">'Python / TypeScript'</span>,
+  infrastructure: <span class="syntax-string">'Azure'</span>,
+  study: <span class="syntax-value">'Integrated M.Tech CSE'</span>,
+&#125;;</code></pre>
+        </div>
+      </div>
+      <a class="scroll-link" href="#about" aria-label="Scroll to About"><span aria-hidden="true">↓</span> About my work</a>
+    </section>
+
+    <section class="activity" aria-label="Portfolio overview">
+      <div class="wrap activity-grid">
+        <a class="activity-card" href="#projects"><strong>{projects.length}</strong><span>Featured projects</span><b aria-hidden="true">↗</b></a>
+        <a class="activity-card" href="#education"><strong>{credentials.length}</strong><span>Selected credentials</span><b aria-hidden="true">↗</b></a>
+        <a class="activity-card" href="#achievements"><strong>{achievements.length}</strong><span>PromptWars results</span><b aria-hidden="true">↗</b></a>
+      </div>
+    </section>
+
+    <section class="chapter alternate" id="about" aria-labelledby="about-title" data-chapter data-view>
+      <div class="wrap" data-reveal>
+        <div class="about-grid">
+          <div>
+            <p class="eyebrow">About</p>
+            <h2 id="about-title">Make the decision traceable.</h2>
+          </div>
+          <div class="about-copy">
+            <p>I study Computer Science and Engineering at Noida Institute of Engineering and Technology. My projects bring together backend development, cloud operations and applied AI around a recurring question: how can someone see what a system decided and why?</p>
+            <p>In <strong>CloudOps Autopilot</strong>, that means recording a human approval before an infrastructure change. In <strong>Governed Enterprise RAG</strong>, it means checking the retrieved evidence and explaining a refusal.</p>
+            <p>I apply that approach to other workflows too, from keeping a stadium’s flagged zones in view to showing how a guest-count change affects a saved event plan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="experience" aria-labelledby="experience-title" data-chapter data-view>
+      <div class="wrap" data-reveal>
+        <h2 id="experience-title">Engineering journey.</h2>
+        <ol class="timeline" role="list">
+          {milestones.map(item => <li class="timeline-item">
+            <article class="timeline-panel panel">
+              <p class="timeline-date">{item.date}</p>
+              <h3>{item.name}</h3>
+              <p class="project-category">{item.context}</p>
+              <ul>{item.details.map(detail => <li>{detail}</li>)}</ul>
+            </article>
+          </li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="chapter alternate" id="projects" aria-labelledby="work-title" data-chapter data-view>
+      <span class="legacy-anchor" id="work"></span>
+      <div class="wrap" data-reveal>
+        <h2 id="work-title">Selected work.</h2>
+        <div class="project-grid">
+          {projects.map((project, i) => <WorkLink project={project} featured={i === 0} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter achievements" id="achievements" aria-labelledby="achievements-title" data-chapter>
+      <div class="wrap" data-reveal>
+        <p class="eyebrow">Hack2skill</p>
+        <h2 id="achievements-title">PromptWars results.</h2>
+        <p class="section-note">Platform ranks and AI evaluation scores at the time of capture.</p>
+        <div class="achievement-grid">
+          {featuredResults.map(result => (
+            <article class="result panel" id={"result-" + result.project}>
+              <p class="result-challenge">{result.round && result.round + " · "}{result.challenge}</p>
+              <h3><a href={"/work/" + result.project + "/"}>{result.name}</a></h3>
+              <dl class="result-metrics">
+                <div><dt>Platform rank</dt><dd>{result.rank}</dd></div>
+                <div><dt>AI evaluation score</dt><dd>{result.score} <small>/ 100</small></dd></div>
+              </dl>
+              <details class="evaluation">
+                <summary>Evaluation breakdown</summary>
+                <dl>
+                  {evaluationCriteria.map((criterion, i) => <div><dt>{criterion}</dt><dd>{result.breakdown[i]}</dd></div>)}
+                </dl>
+              </details>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="skills" aria-labelledby="skills-title" data-chapter data-view>
+      <span class="legacy-anchor" id="capabilities"></span>
+      <div class="wrap" data-reveal>
+        <h2 id="skills-title">Toolkit.</h2>
+        <div class="skills-grid">
+          {skills.map(group => <div><h3>{group.name}</h3><ul class="tags" role="list">{group.tools.map(tool => <li>{tool}</li>)}</ul></div>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter alternate" id="education" aria-labelledby="education-title" data-chapter data-view>
+      <div class="wrap" data-reveal>
+        <h2 id="education-title">Academic background.</h2>
+        <div class="education-grid">
+          <article class="degree panel">
+            <p class="timeline-date">November 2022 – expected June 2027</p>
+            <h3>Integrated M.Tech, Computer Science and Engineering</h3>
+            <p>Noida Institute of Engineering &amp; Technology (NIET)</p>
+          </article>
+          <div class="credentials">
+            <h3>Selected credentials</h3>
+            <p class="credentials-intro">{credentials.length} credentials in cloud infrastructure, AI foundations, networking and DevOps.</p>
+            <ul role="list">
+              {credentials.map(credential => <li class:list={["panel", { "credential-featured": credential.id }]}>
+                {credential.id && <p class="eyebrow">{credential.type}</p>}
+                <strong>{credential.title}</strong>
+                {credential.id ? <>
+                  <p>{credential.issuer}</p>
+                  <p>{credential.context}</p>
+                  <span>Issued {credential.date} · Certificate ID {credential.id}</span>
+                </> : <span>{credential.issuer} · {credential.date}</span>}
+              </li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter contact" id="contact" aria-labelledby="contact-title" data-chapter data-view>
+      <div class="wrap" data-reveal>
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Let’s talk engineering.</h2>
+        <p class="contact-copy">I’m interested in software engineering roles across backend systems, cloud, DevOps and applied AI.</p>
+        <div class="contact-grid">
+          <div class="contact-links">
+            <a class="panel" href={github.url}><span><small>{github.name}</small>{github.detail}</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="contact-message panel">
+            <h3>Start a conversation</h3>
+            <a class="button" href={linkedin.url}>Connect on LinkedIn <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Frame>

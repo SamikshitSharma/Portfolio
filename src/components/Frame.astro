@@ -1,0 +1,73 @@
+---
+import "@fontsource-variable/inter";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/site.css";
+import { chapters, profiles } from "../data/portfolio";
+
+interface Props {
+  title: string;
+  description: string;
+  home?: boolean;
+}
+const { title, description, home = false } = Astro.props;
+const homeLink = home ? "#intro" : "/";
+const links = chapters.slice(1);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0e14" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <script is:inline>
+      try {
+        const preference = localStorage.getItem("portfolio-theme");
+        if (preference === "dark" || preference === "light") document.documentElement.dataset.theme = preference;
+      } catch { /* The system preference still applies. */ }
+    </script>
+  </head>
+  <body class:list={[home ? "home" : "inner"]}>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead" data-header>
+      <div class="wrap nav-inner">
+        <a class="identity" href={homeLink} aria-label="Samikshit Sharma, home"><span aria-hidden="true">SS</span><strong>Samikshit Sharma</strong></a>
+        <nav aria-label="Main navigation" class="desktop-nav">
+          {links.map(({ id, label }) => <a href={(home ? "#" : "/#") + id}>{label}</a>)}
+        </nav>
+        <div class="nav-controls">
+          <button class="theme-control" type="button" aria-label="Switch to light mode" hidden data-theme-toggle>
+            <span class="theme-track" aria-hidden="true"><span></span></span>
+          </button>
+          <details class="mobile-nav">
+            <summary aria-label="Menu"><span aria-hidden="true"></span></summary>
+            <nav aria-label="Mobile navigation">
+              {links.map(({ id, label }) => <a href={(home ? "#" : "/#") + id}>{label}</a>)}
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+    <slot />
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <p>© {new Date().getFullYear()} Samikshit Sharma. Built with Astro.</p>
+        <div>
+          {profiles.slice(0, 2).map(profile => <a href={profile.url}>{profile.name}</a>)}
+          <a href={homeLink}>{home ? "Back to top" : "Portfolio"} <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      import { startNavigation } from "../client/navigation";
+      startNavigation();
+    </script>
+  </body>
+</html>

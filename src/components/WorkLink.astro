@@ -1,0 +1,28 @@
+---
+import type { projects } from "../data/projects";
+
+interface Props {
+  project: (typeof projects)[number];
+  featured?: boolean;
+}
+const { project, featured = false } = Astro.props;
+const caseUrl = "/work/" + project.slug + "/";
+---
+<article class:list={["project-card", "panel", { featured }]}>
+  <div class="project-top">
+    <p class="eyebrow">{project.category}</p>
+    <p class="project-status">{project.status}</p>
+  </div>
+  <h3><a href={caseUrl}>{project.name}</a></h3>
+  <p class="project-summary">{project.summary}</p>
+  <ul class="tags" role="list">
+    {project.stack.map(tool => <li>{tool}</li>)}
+  </ul>
+  <div class="project-bottom">
+    <a class="project-proof" href={caseUrl} aria-label={project.name + " case study"}>Read case study <span aria-hidden="true">↗</span></a>
+    <div class="project-actions">
+      <a href={project.repo} aria-label={project.name + " code repository"}>Source</a>
+      {project.demo && <a href={project.demo} aria-label={project.name + " live demo"}>Demo</a>}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,15 @@
+docs
+.npm-cache
+.astro
+.env*
+dist
+node_modules
+AGENTS.md
+CODEX_FIRST_TASK.md
+README_START_HERE.md
+references
+tests
+output
+playwright-report
+test-results
+private-evidence
