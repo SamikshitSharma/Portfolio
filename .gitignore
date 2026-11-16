@@ -11,3 +11,24 @@ private-evidence/
 /docs/PROJECT_STATUS.md
 .env
 .env.*
+
+# Private credentials and key material
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.aws/
+.ssh/
+*credentials*.json
+*secrets*.json
+*service-account*.json
+
+# Private evidence accidentally placed in public assets
+/public/**/*[Cc]ertificate*.*
+/public/**/*[Ll]eaderboard*.*
+/public/**/*[Ee]valuation*.*
+/public/**/*[Ee]vidence*.*
+/public/**/*[Cc]redential*.*
+/public/**/*[Ss]ecret*.*
